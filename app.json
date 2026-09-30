@@ -1,0 +1,30 @@
+{
+  "name": "com.lvbyte.wpics",
+  "title": "WaifuPics",
+  "author": "luvbyte",
+  "category": "Images",
+  "description": "Waifu pics",
+  "version": "0.1.0",
+  "kikx_version": "0.4.3",
+
+  "include": ["public", "www"],
+
+  "iframe": {
+    "sandbox": ["allow-scripts"],
+    "canGoBack": true
+  },
+
+  "services": ["proxy", "fs"],
+
+  "service_config": {
+    "fs": {
+      "home": "write"
+    }
+  },
+
+  "system": {
+    "access": ["invoke", "alerts"]
+  },
+
+  "theme": "dark"
+}

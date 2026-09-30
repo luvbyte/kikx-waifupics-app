@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Waifu Pics</title>
+
+    <script src="js/tailwind-3.js"></script>
+  </head>
+
+  <body class="h-screen overflow-hidden bg-[#080808] text-white">
+    <!-- Loading -->
+    <div
+      id="loading-screen"
+      class="fixed inset-0 z-[100] flex min-h-dvh flex-col items-center justify-center bg-[#080808]"
+    >
+      <div
+        class="h-7 w-7 animate-spin rounded-full border-2 border-white/10 border-t-pink-500"
+      ></div>
+
+      <p class="mt-4 text-sm text-white/40">Loading waifus...</p>
+    </div>
+
+    <!-- Main -->
+    <div
+      id="main"
+      class="h-screen w-full overflow-x-hidden overflow-y-auto p-2 text-white"
+    >
+      <!-- Navbar -->
+      <header
+        class="sticky top-0 z-40 -mx-2 border-b border-white/10 bg-[#080808]/80 px-2 py-3 backdrop-blur-xl sm:-mx-4 sm:px-4"
+      >
+        <div class="mx-auto flex max-w-7xl items-center gap-2">
+          <!-- Logo -->
+          <button id="logo" class="flex shrink-0 items-center gap-2">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-pink-500 font-black shadow-lg shadow-pink-500/20"
+            >
+              W
+            </div>
+
+            <div class="hidden sm:block">
+              <div class="font-black leading-none">Waifu Pics</div>
+
+              <div class="mt-1 text-[10px] text-white/40">
+                anime image gallery
+              </div>
+            </div>
+          </button>
+
+          <!-- Search -->
+          <div class="relative mx-auto w-full max-w-xl">
+            <svg
+              class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+              />
+            </svg>
+
+            <input
+              id="search"
+              type="search"
+              autocomplete="off"
+              placeholder="Search tags..."
+              class="h-10 w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 text-sm outline-none transition placeholder:text-white/25 focus:border-pink-500/50"
+            />
+          </div>
+
+          <!-- Random -->
+          <button
+            id="random-btn"
+            class="flex h-10 shrink-0 items-center gap-2 rounded-xl bg-pink-500 px-3 text-sm font-bold transition hover:bg-pink-400 active:scale-95"
+          >
+            <span>✦</span>
+
+            <span class="hidden sm:inline"> Random </span>
+          </button>
+        </div>
+      </header>
+
+      <main class="mx-auto max-w-7xl pt-5">
+        <!-- Hero -->
+        <section class="mb-5">
+          <div
+            class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-pink-500/20 via-purple-500/10 to-transparent p-5 sm:p-8"
+          >
+            <p
+              class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-pink-400"
+            >
+              Anime Gallery
+            </p>
+
+            <h1 class="text-3xl font-black tracking-tight sm:text-5xl">
+              Discover your next
+              <span class="text-pink-400"> waifu. </span>
+            </h1>
+
+            <p class="mt-3 max-w-lg text-sm leading-6 text-white/40">
+              Browse anime illustrations, characters, styles and scenes.
+            </p>
+          </div>
+        </section>
+
+        <!-- Tags -->
+        <section class="mb-5">
+          <div id="tag-list" class="flex gap-2 overflow-x-auto pb-1"></div>
+        </section>
+
+        <!-- Active filter -->
+        <div id="active-filter" class="mb-4 hidden items-center gap-2">
+          <span class="text-xs text-white/40"> Filtering by </span>
+
+          <button
+            id="active-tag"
+            class="rounded-full border border-pink-500/30 bg-pink-500/10 px-3 py-1 text-xs font-bold text-pink-400"
+          ></button>
+
+          <button
+            id="clear-filter"
+            class="text-xs text-white/40 hover:text-white"
+          >
+            Clear
+          </button>
+        </div>
+
+        <!-- Gallery -->
+        <section
+          id="gallery"
+          class="columns-2 gap-2 sm:columns-3 sm:gap-3 lg:columns-4 xl:columns-5"
+        ></section>
+
+        <!-- Empty -->
+        <div id="empty" class="hidden py-20 text-center">
+          <div class="text-5xl">૮ ˶ᵔ ᵕ ᵔ˶ ა</div>
+
+          <h2 class="mt-4 text-lg font-bold">No waifus found</h2>
+
+          <p class="mt-1 text-sm text-white/40">Try another tag or search.</p>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading-more" class="hidden justify-center py-8">
+          <div
+            class="h-6 w-6 animate-spin rounded-full border-2 border-white/10 border-t-pink-500"
+          ></div>
+        </div>
+
+        <!-- Load more -->
+        <div class="flex justify-center pt-6">
+          <button
+            id="load-more"
+            class="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold transition hover:bg-white/10 active:scale-95"
+          >
+            Load more
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- Image modal -->
+    <div
+      id="image-modal"
+      class="fixed inset-0 z-[90] hidden items-center justify-center bg-black/90 p-3 backdrop-blur-md"
+    >
+      <button
+        id="modal-close"
+        class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-2xl hover:bg-white/20"
+      >
+        ×
+      </button>
+
+      <div class="flex max-h-full w-full max-w-5xl flex-col items-center">
+        <img
+          id="modal-image"
+          class="max-h-[78dvh] max-w-full rounded-2xl object-contain shadow-2xl"
+          src=""
+          alt=""
+        />
+
+        <div
+          id="modal-info"
+          class="mt-3 flex max-w-full flex-wrap justify-center gap-2"
+        ></div>
+
+        <div class="flex gap-2 items-center">
+          <a
+            id="download-btn"
+            href="#"
+            class="mt-4 rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-bold hover:bg-blue-400"
+          >
+            Download
+          </a>
+          <button
+            id="wallpaper-btn"
+            href="#"
+            target="_blank"
+            class="mt-4 rounded-xl bg-pink-500 px-5 py-2.5 text-sm font-bold hover:bg-pink-400"
+          >
+            Set Wallpaper
+          </button>
+          <button
+            id="share-btn"
+            href="#"
+            target="_blank"
+            class="mt-4 rounded-xl bg-purple-500 px-5 py-2.5 text-sm font-bold hover:bg-pink-400"
+          >
+            Share
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kikx-sdk.umd.js"></script>
+    <script defer src="script.js"></script>
+  </body>
+</html>
