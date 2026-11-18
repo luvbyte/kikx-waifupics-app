@@ -5,7 +5,7 @@ const invoker = new kikxSdk.Invoker(kikxApp);
 
 proxy.setFetchType();
 
-const base = "https://api.waifu.im";
+const base = "https://api.waifu.best";
 const dest = "home://Pictures/WaifuPics";
 
 let pics = [];
@@ -51,10 +51,6 @@ async function fetchPics(query = {}) {
 
   if (query.tag) {
     params.IncludedTags = query.tag;
-  }
-
-  if (query.search) {
-    params.IncludedTags = query.search;
   }
 
   const response = await proxy.proxyRequest(`${base}/images`, {
